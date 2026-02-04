@@ -1,0 +1,124 @@
+# .NET / C# .gitignore
+# Aligned with GitHub templates:
+#   https://github.com/github/gitignore/blob/main/Dotnet.gitignore
+#   https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
+
+# ------------------------------------------------------------------------------
+# User-specific and IDE files (never commit)
+# ------------------------------------------------------------------------------
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Environment and secrets (use env vars or User Secrets in development)
+.env
+*.env
+!.env.example
+
+# ------------------------------------------------------------------------------
+# Build results
+# ------------------------------------------------------------------------------
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# ------------------------------------------------------------------------------
+# IDEs
+# ------------------------------------------------------------------------------
+# Visual Studio
+.vs/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# VS Code: uncomment to ignore; keep commented to share launch/tasks with team
+# .vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+# !.vscode/*.code-snippets
+.history/
+
+# ------------------------------------------------------------------------------
+# NuGet
+# ------------------------------------------------------------------------------
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ------------------------------------------------------------------------------
+# .NET Core / MSBuild
+# ------------------------------------------------------------------------------
+# project.assets.json is usually committed for reproducible restores; do not ignore
+*.binlog
+MSBuild_Logs/
+
+# ------------------------------------------------------------------------------
+# ASP.NET (if applicable)
+# ------------------------------------------------------------------------------
+ScaffoldingReadMe.txt
+
+# ------------------------------------------------------------------------------
+# Test and coverage
+# ------------------------------------------------------------------------------
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+[Cc]overage/
+CodeCoverage/
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+
+# ------------------------------------------------------------------------------
+# OS generated
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ------------------------------------------------------------------------------
+# Misc and temp files
+# ------------------------------------------------------------------------------
+~$*
+*~
+*.log
+*.tmp
+*.temp
+*.swp
+*.cachefile
+
+# Local config with secrets (uncomment if you use them)
+# appsettings.Development.json
+# appsettings.*.local.json
+# **/secrets.json
