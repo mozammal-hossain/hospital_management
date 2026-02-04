@@ -15,8 +15,9 @@
 
 # Environment and secrets (use env vars or User Secrets in development)
 .env
-*.env
+.env.*
 !.env.example
+!.env.sample
 
 # ------------------------------------------------------------------------------
 # Build results
@@ -36,6 +37,8 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
+[Pp]ublish/
+[Pp]ublishProfiles/*.pubxml.user
 
 # ------------------------------------------------------------------------------
 # IDEs
@@ -46,14 +49,15 @@ bld/
 # Rider / JetBrains
 .idea/
 *.sln.iml
+*.DotSettings.user
 
-# VS Code: uncomment to ignore; keep commented to share launch/tasks with team
-# .vscode/*
-# !.vscode/settings.json
-# !.vscode/tasks.json
-# !.vscode/launch.json
-# !.vscode/extensions.json
-# !.vscode/*.code-snippets
+# VS Code: ignore folder but keep shared config (launch, tasks, extensions)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 .history/
 
 # ------------------------------------------------------------------------------
@@ -72,12 +76,28 @@ artifacts/
 # ------------------------------------------------------------------------------
 # project.assets.json is usually committed for reproducible restores; do not ignore
 *.binlog
+*.msb.binlog
 MSBuild_Logs/
 
 # ------------------------------------------------------------------------------
-# ASP.NET (if applicable)
+# Database (SQLite) – local/dev DBs should not be committed
+# ------------------------------------------------------------------------------
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# ------------------------------------------------------------------------------
+# ASP.NET Core
 # ------------------------------------------------------------------------------
 ScaffoldingReadMe.txt
+# User Secrets (dotnet user-secrets); never commit
+**/secrets.json
+**/appsettings.*.local.json
+# Optional: ignore dev overrides if they contain secrets
+# appsettings.Development.json
 
 # ------------------------------------------------------------------------------
 # Test and coverage
@@ -95,6 +115,7 @@ coverage*.xml
 coverage*.info
 *.coverage
 *.coveragexml
+*.opencover.xml
 
 # ------------------------------------------------------------------------------
 # OS generated
@@ -116,9 +137,18 @@ Thumbs.db
 *.tmp
 *.temp
 *.swp
+*.swo
 *.cachefile
+*.bak
+*.pid
+*.seed
 
-# Local config with secrets (uncomment if you use them)
-# appsettings.Development.json
-# appsettings.*.local.json
-# **/secrets.json
+# ------------------------------------------------------------------------------
+# Optional: frontend / Node (if you add npm tooling later)
+# ------------------------------------------------------------------------------
+# node_modules/
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+# .npm
+# .yarn-integrity

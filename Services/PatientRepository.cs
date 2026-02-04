@@ -1,17 +1,21 @@
+using Microsoft.EntityFrameworkCore;
 
 class PatientRepository : IPatientRepository
 {
-    private readonly Dictionary<int, Patient> _patients = new();
-    private int _nextId = 1;
+    private readonly PatientDbContext _context;
+    public PatientRepository(PatientDbContext context)
+    {
+        _context = context;
+    }
 
     public Patient? Add(Patient patient)
     {
-        if (patient.FullName == null | patient.Gender == null || patient.PhoneNumber == null || patient.Email == null)
+        if (patient.FullName == null || patient.Gender == null || patient.PhoneNumber == null || patient.Email == null)
         {
             throw new ArgumentNullException("Patient is invalid");
         }
-        patient.Id = _nextId++;
-        _patients.Add(patient.Id, patient);
+        _context.Patients.Add(patient);
+        _context.SaveChanges();
         return patient;
     }
 
@@ -25,7 +29,8 @@ class PatientRepository : IPatientRepository
         }
         else
         {
-            _patients.Remove(id);
+            _context.Patients.Remove(patient);
+            _context.SaveChanges();
             return true;
         }
 
@@ -33,12 +38,12 @@ class PatientRepository : IPatientRepository
 
     public IEnumerable<Patient> GetAll()
     {
-        return _patients.Values;
+        return _context.Patients.ToList();
     }
 
     public Patient? GetById(int id)
     {
-        return _patients.TryGetValue(id, out var _) ? _patients[id] : null;
+        return _context.Patients.FirstOrDefault(p => p.Id == id);
     }
 
     public Patient? Update(Patient patient)
@@ -55,7 +60,8 @@ class PatientRepository : IPatientRepository
         existingPatient.Email = patient.Email;
         existingPatient.AdmittedAt = patient.AdmittedAt;
         existingPatient.IsDischarged = patient.IsDischarged;
-        _patients[existingPatient.Id] = existingPatient;
+        _context.Patients.Update(existingPatient);
+        _context.SaveChanges();
         return existingPatient;
     }
 
