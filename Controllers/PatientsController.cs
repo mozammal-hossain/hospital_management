@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/patients")]
-class PatientsController : ControllerBase
+public class PatientsController : ControllerBase
 {
 
     private readonly IPatientRepository _repository;

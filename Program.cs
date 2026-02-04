@@ -1,20 +1,35 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 builder.Services.AddControllers();
-builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddDbContext<PatientDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
+    {
+        Title = "Hospital Management API",
+        Version = "v1",
+        Description = "API for hospital management system"
+    });
+});
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// app.UseHttpsRedirection();
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Hospital Management API v1");
+    });
 }
-
-app.UseHttpsRedirection();
 
 app.MapControllers();
 
