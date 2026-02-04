@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 [ApiController]
 [Route("api/patients")]
@@ -6,10 +7,12 @@ public class PatientsController : ControllerBase
 {
 
     private readonly IPatientRepository _repository;
+    private readonly ILogger<PatientsController> _logger;
 
-    public PatientsController(IPatientRepository repository)
+    public PatientsController(IPatientRepository repository, ILogger<PatientsController> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -24,18 +27,16 @@ public class PatientsController : ControllerBase
         Patient? patient = _repository.GetById(id);
         if (patient == null)
         {
+            _logger.LogWarning("Patient with id {PatientId} not found", id);
             return NotFound();
         }
+        _logger.LogInformation("Patient with id {PatientId} found", id);
         return Ok(patient);
     }
 
     [HttpPost]
     public IActionResult Create([FromBody] CreatePatientRequest request)
     {
-        if (request.FullName == null || request.Gender == null || request.PhoneNumber == null || request.Email == null)
-        {
-            return BadRequest();
-        }
 
         Patient patient = new Patient
         {
@@ -51,8 +52,10 @@ public class PatientsController : ControllerBase
         Patient? createdPatient = _repository.Add(patient);
         if (createdPatient == null)
         {
+            _logger.LogError("Failed to create patient");
             return StatusCode(500, "Internal server error");
         }
+        _logger.LogInformation("Created patient with id {PatientId}", createdPatient.Id);
         return CreatedAtAction(nameof(GetById), new { id = patient.Id }, patient);
     }
 
@@ -63,6 +66,7 @@ public class PatientsController : ControllerBase
 
         if (patient == null)
         {
+            _logger.LogWarning("Update failed: patient with id {PatientId} not found", id);
             return NotFound();
         }
 
@@ -77,6 +81,7 @@ public class PatientsController : ControllerBase
 
         if (updatedPatient == null)
         {
+            _logger.LogError("Failed to update patient with id {PatientId}", id);
             return StatusCode(500, "Internal server error");
         }
 
@@ -88,10 +93,12 @@ public class PatientsController : ControllerBase
     {
         if (_repository.Delete(id))
         {
+            _logger.LogInformation("Deleted patient with id {PatientId}", id);
             return NoContent();
         }
         else
         {
+            _logger.LogWarning("Delete failed: patient with id {PatientId} not found", id);
             return NotFound();
         }
     }
