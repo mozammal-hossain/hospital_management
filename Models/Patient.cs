@@ -1,4 +1,4 @@
-class Patient
+public class Patient
 {
     public int Id { get; set; }
     public required string FullName { get; set; }

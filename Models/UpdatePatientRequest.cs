@@ -1,4 +1,4 @@
-class UpdatePatientRequest
+public class UpdatePatientRequest
 {
     public string? FullName { get; set; }
     public DateTime? DateOfBirth { get; set; }

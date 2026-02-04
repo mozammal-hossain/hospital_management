@@ -6,6 +6,10 @@ class PatientRepository : IPatientRepository
 
     public Patient? Add(Patient patient)
     {
+        if (patient.FullName == null | patient.Gender == null || patient.PhoneNumber == null || patient.Email == null)
+        {
+            throw new ArgumentNullException("Patient is invalid");
+        }
         patient.Id = _nextId++;
         _patients.Add(patient.Id, patient);
         return patient;

@@ -1,8 +1,8 @@
-interface IPatientRepository
+public interface IPatientRepository
 {
-    IEnumerable<Patient> GetAll();
-    Patient? GetById(int id);
-    Patient? Add(Patient patient);
-    Patient? Update(Patient patient);
-    bool Delete(int id);
+    public IEnumerable<Patient> GetAll();
+    public Patient? GetById(int id);
+    public Patient? Add(Patient patient);
+    public Patient? Update(Patient patient);
+    public bool Delete(int id);
 }
